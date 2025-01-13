@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/contatos")
 public class ContatoController {
@@ -63,9 +64,9 @@ public class ContatoController {
     public Page<ContatoResponse> getContatosPaginados(
             @RequestParam(value = "palavraChave", required = false, defaultValue = "") String palavraChave,
             @RequestParam(value = "page", defaultValue = "1") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "sort", defaultValue = "asc") String sort) {
-        return contatoService.getContatosPaginados(palavraChave, page, size, sort);
+            @RequestParam(value = "size", defaultValue = "10") int size) {
+        Page<Contato> contatos = contatoService.getContatosPaginados(palavraChave, page, size);
+        return contatos.map(ContatoResponse::new);
     }
 
     @PostMapping("/save")
