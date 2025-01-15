@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
@@ -63,7 +63,7 @@ public class UsuarioController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<String> updateUsuario(@PathVariable Long id, @RequestBody UsuarioCreateRequest usuarioRequest) {
        try {
            String retorno = usuarioService.updateUsuario(id, usuarioRequest);
@@ -74,7 +74,7 @@ public class UsuarioController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUsuarioById(@PathVariable Long id) {
         try {
             String mensagem = usuarioService.deleteUsuario(id);

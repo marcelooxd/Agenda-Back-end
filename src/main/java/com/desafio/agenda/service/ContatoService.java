@@ -73,16 +73,30 @@ public class ContatoService {
         return contatoRepository.findAllContatos(idUsuario);
     }
 
-    public Contato getContatoById(Long id) {
-        return contatoRepository.findById(id).orElseThrow(() -> new RuntimeException("Endereco não encontrado."));
+    public Contato getoById(Long id) {
+        return contatoRepository.findById(id).orElseThrow(() -> new RuntimeException("Contato não encontrado."));
     }
 
+    public Contato getContatoById(Long id) {
+        try {
+            return contatoRepository.findContatoById(id);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException( e.getMessage());
+        }
+    }
+
+
     public Page<Contato> getContatosPaginados(Long idUsuario, String palavraChave, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        if (palavraChave != null && !palavraChave.isEmpty()) {
-            return contatoRepository.findContatosPaginadosFiltrados(idUsuario, palavraChave, pageable);
-        } else {
-            return contatoRepository.findAllContatosPaginados(idUsuario, pageable);
+        try {
+            Pageable pageable = PageRequest.of(page, size);
+            if (palavraChave != null && !palavraChave.isEmpty()) {
+                return contatoRepository.findContatosPaginadosFiltrados(idUsuario, palavraChave, pageable);
+            } else {
+                return contatoRepository.findAllContatosPaginados(idUsuario, pageable);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         }
     }
 

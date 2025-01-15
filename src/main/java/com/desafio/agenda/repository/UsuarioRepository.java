@@ -24,5 +24,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     Usuario save(Usuario usuario);
 
-    Usuario getUsuarioById(Long id);
+
 }

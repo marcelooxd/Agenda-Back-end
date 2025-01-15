@@ -71,8 +71,12 @@ public class UsuarioService {
         try {
             Usuario usuarioAtualizado = getUsuarioById(id);
             usuarioAtualizado = validarUsuario(usuario);
-            usuarioRepository.save(usuarioAtualizado);
-            return "Usuário atualizado com sucesso!";
+            if (usuarioAtualizado.getId() != null) {
+                usuarioRepository.save(usuarioAtualizado);
+                return "Usuário atualizado com sucesso!";
+            } else {
+                return "Usuário não pode ser atualizado!";
+            }
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }

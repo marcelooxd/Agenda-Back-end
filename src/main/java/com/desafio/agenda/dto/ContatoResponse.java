@@ -1,9 +1,6 @@
 package com.desafio.agenda.dto;
 
-import com.desafio.agenda.entity.Contato;
-import com.desafio.agenda.entity.EGenero;
-import com.desafio.agenda.entity.ETipoPessoa;
-import com.desafio.agenda.entity.Usuario;
+import com.desafio.agenda.entity.*;
 import org.springframework.beans.BeanUtils;
 
 import java.util.Calendar;
@@ -20,8 +17,8 @@ public class ContatoResponse {
     private String profissao;
     private ETipoPessoa tipoPessoa;
     private EGenero genero;
+    private EnderecoResponse endereco;
     private Long usuario;
-    private Long endereco;
 
     public ContatoResponse() {}
 
@@ -36,7 +33,7 @@ public class ContatoResponse {
         this.profissao = contato.getProfissao();
         this.tipoPessoa = contato.getTipoPessoa();
         this.genero = contato.getGenero();
-        this.endereco = contato.getEndereco().getId();
+        this.endereco = new EnderecoResponse(contato.getEndereco());
         this.usuario = contato.getUsuario().getId();
     }
 
@@ -128,11 +125,11 @@ public class ContatoResponse {
         this.usuario = usuario;
     }
 
-    public Long getEndereco() {
+    public EnderecoResponse getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(Long endereco) {
+    public void setEndereco(EnderecoResponse endereco) {
         this.endereco = endereco;
     }
 }

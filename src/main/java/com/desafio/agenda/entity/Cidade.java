@@ -43,4 +43,36 @@ public class Cidade implements Serializable {
         this.cidade = cidadeCreateRequest.getCidade();
         this.estado = cidadeCreateRequest.getEstado();
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public List<Endereco> getEnderecos() {
+        return enderecos;
+    }
+
+    public void setEnderecos(List<Endereco> enderecos) {
+        this.enderecos = enderecos;
+    }
+
+    public EEstado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EEstado estado) {
+        this.estado = estado;
+    }
 }
