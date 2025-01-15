@@ -12,6 +12,7 @@ import java.util.Calendar;
 @EqualsAndHashCode
 public class ContatoCreateRequest {
 
+    private Long id;
     private String primeiroNome;
     private String sobrenome;
     private String cpfCnpj;
@@ -27,7 +28,17 @@ public class ContatoCreateRequest {
     public ContatoCreateRequest() {}
 
     public ContatoCreateRequest(Contato contato) {
-        BeanUtils.copyProperties(contato, this);
+        this.primeiroNome = contato.getPrimeiroNome();
+        this.sobrenome = contato.getSobrenome();
+        this.cpfCnpj = contato.getCpfCnpj();
+        this.dataAniversario = contato.getDataAniversario();
+        this.email = contato.getEmail();
+        this.telefone = contato.getTelefone();
+        this.profissao = contato.getProfissao();
+        this.tipoPessoa = contato.getTipoPessoa();
+        this.genero = contato.getGenero();
+        this.endereco = new EnderecoCreateRequest(contato.getEndereco());
+        this.usuario = contato.getUsuario().getId();
     }
 
     public String getPrimeiroNome() {

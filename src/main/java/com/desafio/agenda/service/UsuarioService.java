@@ -20,18 +20,14 @@ public class UsuarioService {
             if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
                 throw new RuntimeException("E-mail já cadastrado.");
             }
-            if (usuarioRepository.findByLogin(usuario.getLogin()).isPresent()) {
-                throw new RuntimeException("Login já cadastrado.");
-            }
-            if (usuario.getNome() == null) {
+            if (usuario.getNome() == null || usuario.getNome().isEmpty()) {
                 throw new RuntimeException("Nome não pode estar vazio.");
             }
-            if (usuario.getSenha() == null) {
+            if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
                 throw new RuntimeException("A senha não pode estar vazia.");
             }
             Usuario usuarioValidado = new Usuario();
             usuarioValidado.setNome(usuario.getNome());
-            usuarioValidado.setLogin(usuario.getLogin());
             usuarioValidado.setSenha(usuario.getSenha());
             usuarioValidado.setEmail(usuario.getEmail());
 
@@ -44,12 +40,22 @@ public class UsuarioService {
     }
 
     public Usuario login(String login, String senha) {
-        return usuarioRepository.findByLoginSenha(login, senha);
+        try {
+            return usuarioRepository.findByLoginSenha(login, senha);
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Usuário não encontrado.");
+        }
     }
 
     public Usuario getUsuarioById(Long id) {
         return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado."));
     }
+
+    public Usuario getUsuarioPorId(Long id) {
+        return usuarioRepository.findUsuarioById(id);
+    }
+
 
     public String save(UsuarioCreateRequest usuario) throws Exception {
         try {

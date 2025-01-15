@@ -6,15 +6,11 @@ import org.springframework.beans.BeanUtils;
 public class UsuarioCreateRequest {
 
     private Long id;
-    private String login;
     private String nome;
     private String email;
     private String senha;
 
     public Long getId() {  return id; }
-
-    public String getLogin() {  return login;  }
-    public void setLogin(String login) { this.login = login; }
 
     public String getSenha() {  return senha; }
     public void setSenha(String senha) { this.senha = senha; }
@@ -28,6 +24,9 @@ public class UsuarioCreateRequest {
     public UsuarioCreateRequest() {}
 
     public UsuarioCreateRequest(Usuario usuario) {
-        BeanUtils.copyProperties(usuario, this);
+        this.id = usuario.getId();
+        this.nome = usuario.getNome();
+        this.email = usuario.getEmail();
+        this.senha = usuario.getSenha();
     }
 }

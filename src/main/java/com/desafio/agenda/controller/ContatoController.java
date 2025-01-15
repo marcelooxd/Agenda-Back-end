@@ -62,11 +62,17 @@ public class ContatoController {
 
     @GetMapping("/contatosPaginados")
     public Page<ContatoResponse> getContatosPaginados(
+            @RequestParam(value = "idUsuario", required = false) Long idUsuario,
             @RequestParam(value = "palavraChave", required = false, defaultValue = "") String palavraChave,
             @RequestParam(value = "page", defaultValue = "1") int page,
             @RequestParam(value = "size", defaultValue = "10") int size) {
-        Page<Contato> contatos = contatoService.getContatosPaginados(palavraChave, page, size);
-        return contatos.map(ContatoResponse::new);
+        try {
+            Page<Contato> contatos = contatoService.getContatosPaginados(idUsuario, palavraChave, page, size);
+            return contatos.map(ContatoResponse::new);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping("/save")

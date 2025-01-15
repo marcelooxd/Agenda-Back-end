@@ -50,29 +50,29 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
             " JOIN FETCH ct.usuario usua " +
             " JOIN FETCH ct.endereco ende " +
             " JOIN FETCH ende.cidade cid " +
-            " WHERE ct.usuario.id = usua.id " +
+            " WHERE ct.usuario.id = :idUsuario " +
             " AND (:palavraChave IS NOT NULL AND :palavraChave <> '' ) AND :palavraChave = ct.primeiroNome ",
     countQuery =
             " SELECT count(ct) FROM Contato ct " +
             " JOIN ct.usuario usua "  +
             " JOIN ct.endereco ende " +
             " JOIN ende.cidade cid " +
-            " WHERE ct.usuario.id = usua.id" +
+            " WHERE ct.usuario.id = :idUsuario " +
             " AND (:palavraChave IS NOT NULL AND :palavraChave <> '' ) AND :palavraChave = ct.primeiroNome ")
-    Page<Contato> findContatosPaginadosFiltrados(@Param("palavraChave") String palavraChave, Pageable pageable);
+    Page<Contato> findContatosPaginadosFiltrados(@Param("idUsuario") Long idUsuario, @Param("palavraChave") String palavraChave, Pageable pageable);
 
     @Query(value =
             "SELECT ct FROM Contato ct " +
             " JOIN FETCH ct.usuario usua " +
             " JOIN FETCH ct.endereco ende " +
             " JOIN FETCH ende.cidade cid " +
-            " WHERE ct.usuario.id = usua.id ",
+            " WHERE ct.usuario.id = :idUsuario ",
     countQuery =
             "SELECT count(ct) FROM Contato ct " +
             " JOIN ct.usuario usua "  +
             " JOIN ct.endereco ende " +
             " JOIN ende.cidade cid " +
-            " WHERE ct.usuario.id = usua.id ")
-    Page<Contato> findAllContatosPaginados(Pageable pageable);
+            " WHERE ct.usuario.id = :idUsuario ")
+    Page<Contato> findAllContatosPaginados(@Param("idUsuario") Long idUsuario, Pageable pageable);
 
 }

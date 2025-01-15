@@ -77,12 +77,12 @@ public class ContatoService {
         return contatoRepository.findById(id).orElseThrow(() -> new RuntimeException("Endereco não encontrado."));
     }
 
-    public Page<Contato> getContatosPaginados(String palavraChave, int page, int size) {
+    public Page<Contato> getContatosPaginados(Long idUsuario, String palavraChave, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         if (palavraChave != null && !palavraChave.isEmpty()) {
-            return contatoRepository.findContatosPaginadosFiltrados(palavraChave, pageable);
+            return contatoRepository.findContatosPaginadosFiltrados(idUsuario, palavraChave, pageable);
         } else {
-            return contatoRepository.findAllContatosPaginados(pageable);
+            return contatoRepository.findAllContatosPaginados(idUsuario, pageable);
         }
     }
 

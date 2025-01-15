@@ -15,7 +15,7 @@ public class LoginResponse {
 
     public LoginResponse() {}
 
-    public LoginResponse(String login, String senha ) {
+    public LoginResponse(String login, String senha) {
         this.login = login;
         this.senha = senha;
     }

@@ -30,6 +30,7 @@ public class UsuarioController {
             }
         }
         catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -37,7 +38,7 @@ public class UsuarioController {
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponse> getUsuarioById(@PathVariable Long id) {
         try {
-            Usuario usuario = usuarioService.getUsuarioById(id);
+            Usuario usuario = usuarioService.getUsuarioPorId(id);
             if (usuario.getId() != null) {
                 UsuarioResponse usuarioDTO = new UsuarioResponse(usuario);
                 return ResponseEntity.ok(usuarioDTO);
@@ -46,6 +47,7 @@ public class UsuarioController {
             }
         }
         catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -56,16 +58,18 @@ public class UsuarioController {
             String retorno = usuarioService.save(usuarioRequest);
             return new ResponseEntity<>(retorno, HttpStatus.CREATED);
         } catch (Exception e){
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
+            return new ResponseEntity<>("Usuário não foi cadastrado",HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> getUsuarioById(@PathVariable Long id, @RequestBody UsuarioCreateRequest usuarioRequest) {
+    public ResponseEntity<String> updateUsuario(@PathVariable Long id, @RequestBody UsuarioCreateRequest usuarioRequest) {
        try {
            String retorno = usuarioService.updateUsuario(id, usuarioRequest);
            return new ResponseEntity<>(retorno, HttpStatus.CREATED);
        }  catch (Exception e) {
+           e.printStackTrace();
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -76,6 +80,7 @@ public class UsuarioController {
             String mensagem = usuarioService.deleteUsuario(id);
             return ResponseEntity.ok(mensagem);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
