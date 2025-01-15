@@ -5,6 +5,7 @@ import com.desafio.agenda.entity.Contato;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -74,5 +75,9 @@ public interface ContatoRepository extends JpaRepository<Contato, Long> {
             " JOIN ende.cidade cid " +
             " WHERE ct.usuario.id = :idUsuario ")
     Page<Contato> findAllContatosPaginados(@Param("idUsuario") Long idUsuario, Pageable pageable);
+
+    @Modifying
+    @Query("UPDATE FROM Contato ct set ct.usuario = :idUsuario WHERE ct.id = :id ")
+    void updateUsuario(@Param("id") Long id, @Param("idUsuario") Long idUsuario);
 
 }

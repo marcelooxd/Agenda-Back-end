@@ -103,7 +103,16 @@ public class ContatoService {
     public String save(Contato contatoNovo) {
         try {
             contatoRepository.save(contatoNovo);
-            return "Contato cadastrado com sucesso!";
+            if (contatoNovo.getUsuario().getId() != null) {
+                return "Contato cadastrado com sucesso!";
+            } else {
+                try {
+                    contatoRepository.updateUsuario(contatoNovo.getUsuario().getId(), contatoNovo.getId());
+                    return "Contato cadastrado com sucesso!";
+                } catch (RuntimeException e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
         } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
         }
